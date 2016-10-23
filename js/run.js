@@ -4,13 +4,23 @@ var list = {
     'city': {'name': 'Город', 'list': {'Выберите': '', 'Екатеринбург': 'Екатеринбург', 'Челябинск': 'Челябинск'}},
     'phone': {'name': 'Телефон'},
     'product': {'name': 'Товар'},
-    'cnt': {'name': 'Количество'},
+    'cnt': {'name': 'Количество', 'class': 'check'},
     'target': {'name': 'Для каких целей'}
 };
 
 var myForm = new Form('form', list, 'myForm', 'php/index.php');
 myForm.run();
 
-//console.log(myForm);
+$( document ).on( "click", ".warning", function() {
+  $(this).removeClass('warning')
+});
+
+/*console.log($( ".warning" ));
+$( ".warning" ).each(function(index) {
+    $(this).live("mousedown", function(){
+        // For the boolean value
+          console.log($(this))
+    });
+});*/
 
 

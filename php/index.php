@@ -1,3 +1,4 @@
 <?php
+include_once 'classSave.php';
 
-var_dump($_POST);
+$save = new Save($_POST);
