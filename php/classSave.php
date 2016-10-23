@@ -7,6 +7,7 @@ class SaveClass {
     private $log = false;
 
     private function Log($txt, $method) {
+        $txt = print_r($txt, true);
         file_put_contents(__DIR__ . '/logs/' . date('Y-m-d') . '_log.log', "[$method][" . date('H:i:s') . "]" . PHP_EOL . $txt . PHP_EOL, FILE_APPEND);
     }
 
@@ -21,7 +22,7 @@ class SaveClass {
 
     public function Send($param) {
         if ($this->log)
-            $this->Log(json_encode($param), __FUNCTION__);
+            $this->Log($param, __FUNCTION__);
         return $param;
     }
 }
