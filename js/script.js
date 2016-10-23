@@ -33,17 +33,20 @@ function Form(idform, param, obj, url) {
     };
 
     this.send = function () {
+
         var bad = 0;
         for (var id in param) {
             if ($('#' + id).hasClass('check') && $('#' + id).val().trim() == '')
             {
                 bad++;
                 $('#' + id).addClass('warning');
-            }
-            else $('#' + id).removeClass('warning');
+            } else
+                $('#' + id).removeClass('warning');
         }
-        if (bad > 0) return false;
-
+        if (bad > 0)
+            return false;
+        
+        $('#send').attr('disabled', true);
         var form = $('#serForm').serializeArray();
         $.ajax({
             url: url,
@@ -51,6 +54,7 @@ function Form(idform, param, obj, url) {
             data: form,
             success: function (data) {
                 console.log(data);
+                $('#send').attr('disabled', false);
             }
         });
     };
