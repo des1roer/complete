@@ -58,13 +58,5 @@ function Form(idform, param, obj, url) {
             }
         });
     };
-
-    this.getArray = function () {
-        return this.param;
-    };
-
-    this.getClass = function () {
-        return this.constructor;
-    };
 }
 

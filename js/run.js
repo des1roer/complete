@@ -15,12 +15,5 @@ $( document ).on( "click", ".warning", function() {
   $(this).removeClass('warning')
 });
 
-/*console.log($( ".warning" ));
-$( ".warning" ).each(function(index) {
-    $(this).live("mousedown", function(){
-        // For the boolean value
-          console.log($(this))
-    });
-});*/
 
 
