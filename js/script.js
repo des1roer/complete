@@ -46,7 +46,12 @@ function Form(idform, param, obj, url, to) {
                 for (var id in param) {
                     $('#' + id).autocomplete({
                         source: data[id],
-                        autoFill: true,                   
+                        autoFill: true,
+                        select: function (event, ui) {
+                            // по выбору - перейти на страницу товара
+
+                            //return false;
+                        },
                         //  minLength: 3 // начинать поиск с трех символов
                     });
 
@@ -57,27 +62,29 @@ function Form(idform, param, obj, url, to) {
 
     function recalc(tid, val)
     {
-        var post = {'act':'recalc'};
-        post[tid] = val;
+        if (val == '')
+            return false;
         
+        var post = {'act': 'recalc'};
+        post[tid] = val;
+
         for (var id in param) {
             if (id != tid && $('#' + id).val().trim() != '')
                 post[id] = $('#' + id).val();
         }
-        console.log('e', post, val)
-        
-         $.ajax({
+        // console.log('e', post, val)
+
+        $.ajax({
             url: url,
             data: post,
             type: "POST",
             success: function (data) {
                 data = JSON.parse(data);
-                for (var id in param) {
-                    $('#' + id).autocomplete({
-                        source: data[id],
-                        autoFill: true,                   
-                        //  minLength: 3 // начинать поиск с трех символов
-                    });
+                if (Object.keys(data).length > 0)
+                {
+                    for (var id in param) {
+                        $('#' + id).val(data[id]);
+                    }
                 }
             }
         });
