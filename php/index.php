@@ -20,14 +20,19 @@ if (!empty($arr['act'])) {
     //var_dump("select * , count(*) as cnt from test where $cond");
     $result = mysql_query("select * from test where $cond");
     $num_rows = mysql_num_rows($result);
-
+ 
     $res = array();
     while ($row = mysql_fetch_assoc($result)) {
   
         if ($num_rows == 1) {
             echo json_encode($row);
             die();
-        } else {
+        } 
+        elseif ($num_rows == 0) {
+            echo '{}';
+            die();
+        } 
+        else {
             foreach ($row as $key => $value) {
                 $res[$key][] = $value;
             }

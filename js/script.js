@@ -75,7 +75,10 @@ function Form(idform, param, obj, url, to) {
             type: "POST",
             success: function (data) {
                 data = JSON.parse(data);
-
+                console.log(data);
+                if (Object.keys(data).length == 0)
+                    return false;
+                
                 for (var id in param) {
                     if (Object.keys(data.id).length == 1)
                         $('#' + id).val(data[id]);
