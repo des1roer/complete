@@ -18,15 +18,24 @@ if (!empty($arr['act'])) {
     }
     $cond = substr($cond, 4);
     //var_dump("select * , count(*) as cnt from test where $cond");
-    $result = mysql_query("select * , count(*) as cnt from test where $cond");
-  
+    $result = mysql_query("select * from test where $cond");
+    $num_rows = mysql_num_rows($result);
+
     $res = array();
     while ($row = mysql_fetch_assoc($result)) {
-      // var_dump($row);
-        if ($row['cnt'] == 1)
+  
+        if ($num_rows == 1) {
             echo json_encode($row);
-        else echo '{}';
+            die();
+        } else {
+            foreach ($row as $key => $value) {
+                $res[$key][] = $value;
+            }
+        }
     }
+
+    $res = uniq($res);
+    echo json_encode($res);
 
     die();
 }
@@ -44,11 +53,20 @@ $res = array();
 while ($row = mysql_fetch_assoc($result)) {
     foreach ($row as $key => $value) {
         $res[$key][] = $value;
-    }    
+    }
 }
 
-foreach ($res as $key => $value) {
-    $res[$key] = array_unique($res[$key]);
-}
+$res = uniq($res);
 
 echo json_encode($res);
+
+function uniq($res) {
+    foreach ($res as $key => $value) {
+        $res[$key] = array_unique($res[$key]);
+    }
+
+    foreach ($res as $key => $value) {
+        $res[$key] = array_values($res[$key]);
+    }
+    return $res;
+};

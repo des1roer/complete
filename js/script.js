@@ -47,14 +47,9 @@ function Form(idform, param, obj, url, to) {
                     $('#' + id).autocomplete({
                         source: data[id],
                         autoFill: true,
-                        select: function (event, ui) {
-                            // по выбору - перейти на страницу товара
-
-                            //return false;
-                        },
+                        maxItemsToShow: 20, 
                         //  minLength: 3 // начинать поиск с трех символов
-                    });
-
+                    })
                 }
             }
         });
@@ -64,7 +59,7 @@ function Form(idform, param, obj, url, to) {
     {
         if (val == '')
             return false;
-        
+
         var post = {'act': 'recalc'};
         post[tid] = val;
 
@@ -80,14 +75,26 @@ function Form(idform, param, obj, url, to) {
             type: "POST",
             success: function (data) {
                 data = JSON.parse(data);
-                if (Object.keys(data).length > 0)
-                {
-                    for (var id in param) {
+
+                for (var id in param) {
+                    if (Object.keys(data.id).length == 1)
                         $('#' + id).val(data[id]);
+                    else {
+                        $('#' + id).autocomplete({
+                            source: data[id],
+                            autoFill: true,
+                            select: function (event, ui) {
+                                // по выбору - перейти на страницу товара
+
+                                //return false;
+                            },
+                            //minLength: 3 // начинать поиск с трех символов
+                        });
                     }
                 }
             }
         });
     }
+
 }
 
